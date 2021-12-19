@@ -1,73 +1,67 @@
-let root = document.querySelector(':root')
-let container = document.querySelector('.container');
-let newTaskInput = document.getElementById('new_task_input')
-let taskform = document.getElementById('new_task_form');
-let tasksList = document.getElementById('tasksList');
-let taskBtns = document.querySelectorAll('.task_check_btn');
+document.querySelector('form').addEventListener('submit', handleSubmitForm);
 
-taskform.addEventListener('submit', function (e) {
+document.querySelector('ul').addEventListener('click', handleClickDeleteOrCheck);
 
+document.getElementById('clearAll').addEventListener('click', handleClearAll);
+
+function handleSubmitForm(e) {
     e.preventDefault();
-    let newtaskInputValue = taskform.elements.new_task_input;
-
-
-    addTask(newtaskInputValue.value)
-
-
-    newtaskInputValue.value = '';
-    container.classList.remove('task_list_empty')
-
-
-})
-
-
-function addTask(newTask) {
-
-
-    const newTaskItem = document.createElement('li');
-    newTaskItem.setAttribute('class', 'task_item');
-
-
-
-    const newCheckBtn = document.createElement('div');
-    newCheckBtn.setAttribute('class', 'task_check_btn')
-
-
-    const newTaskBio = document.createElement('span');
-    newTaskBio.setAttribute('class', 'task_bio')
-
-
-    newTaskBio.innerText = newTask; 
-
-
-    tasksList.appendChild(newTaskItem)
-
-
-    newTaskItem.appendChild(newTaskBio)
-
-
-    onTaskComplete(newCheckBtn)
-
+    let input = document.querySelector('input');
+    if (input.value != '') {
+        addTodo(input.value);
+    }
+    input.value = '';
 }
 
-function onTaskComplete(btns) {
+function handleClickDeleteOrCheck(e) {
+    if (e.target.name == 'checkButton') {
+        checkTodo(e);
+    }
 
-    btns.addEventListener('click', function (e) {
-        var parent = e.toElement.parentElement;
-        parent.classList.add('task-completed'); 
-        setTimeout(() => {
-            parent.remove();
-        }, 400);
-
-
-        if (tasksList.childNodes.length == 1) {
-            setTimeout(() => {
-                container.classList.add('task_list_empty')
-                
-            }, 800);
-        }
-
-    })
-
-
+    if(e.target.name == 'deleteButton') {
+        deleteTodo(e);
+    }
 }
+
+function handleClearAll(e) {
+    document.querySelector('ul').innerHTML = '';
+}
+
+function addTodo(todo) {
+    let ul = document.querySelector('ul');
+    let li = document.createElement('li');
+    li.contentEditable = "true";
+    
+    li.innerHTML = `
+        <span class="todoItem">${todo}</span>
+        <span class="date">${document.querySelector("#date").value}</span>
+        <button name="checkButton"><i class="fas fa-check"></i></button>
+        <button name="deleteButton"><i class="fas fa-trash"></i></button>
+    `;
+
+    li.classList.add('todoListItem');
+    ul.appendChild(li);
+}
+
+function checkTodo(e) {
+    let item = e.target.parentNode;
+    if(item.style.textDecoration == 'line-through') {
+        item.style.textDecoration = 'none';
+    }
+    else {
+        item.style.textDecoration = 'line-through';
+    }
+}
+
+function deleteTodo(e) {
+    let item = e.target.parentNode;
+
+    item.remove();
+}
+/*
+function store {
+    localStorage.setItem('input', document.querySelector('input').value);
+    localStorage.setItem('ul', document.querySelector('ul').value);
+    localStorage.setItem('li', document.querySelector('li').value);
+    localStorage.setItem('item', document.querySelector('item').value);
+}*/

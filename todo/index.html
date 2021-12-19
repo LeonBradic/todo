@@ -6,24 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="assets/styles.css">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
-<body>
-    <div class="container task_list_empty">
-        <header>
-            <span class="heading">To - Do List</span>
-        </header>
-        <section class="tasks">
-            <ul id="tasksList"></ul>
-        </section>
-        <footer>
-            <form id="new_task_form">
-                <input type="text" name="new_task_input" id="new_task_input" placeholder="To - Do" value=""/>
-                <input type="date" class="datum">
-                <button id="new_task_input_btn" type="submit"></button>
-            </form>
-        </footer>
+<body class="container">
+    <header class="title">
+        <h1>To-Do</h1>
+    </header>
+    <div class="main">
+        <form>
+            <input type="text" placeholder="New Task">
+            <input type="date" id="date" class="date">
+            <button type="submit"><i class="fas fa-plus"></i></button>
+        </form>
+
+        <div class="todoList">
+            <ul>
+
+            </ul>
+            <a class="clearAll" id="clearAll">Clear all</a>
+        </div>
     </div>
+
     <script src="todo.js"></script>
 </body>
 </html>
